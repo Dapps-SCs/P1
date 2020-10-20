@@ -65,4 +65,4 @@ Crear un modificador, llamado noMatriculados, para que la función automatricula
 
 ## Diagrama de clases
 
-
+<img src="http://yuml.me/diagram/scruffy/class/[User|#counter;+Forename;+Surname;+HashedPassword;-Salt|+Login(user,pass);+Logout();+Register()]" >
