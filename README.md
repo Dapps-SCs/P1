@@ -4,9 +4,11 @@ Práctica 1 - Contrato Asignatura
 
 ## Entrega
 
+## Diagrama de clases
+
 ## Enunciado
 
-## Diagrama de clases
+
 
 ------------
 
@@ -19,6 +21,12 @@ Hay en entregar un fichero llamado Asignatura.sol.
 Poner un comentario en el fichero con los nombres de los alumnos del grupo.
 
 Solo tiene que entregar la práctica uno de los miembros del grupo.
+
+## Diagrama de clases
+
+<img src="http://yuml.me/diagram/scruffy/class/[User|#counter;+Forename;+Surname;+HashedPassword;-Salt|+Login(user,pass);+Logout();+Register()]">
+
+<img src="http://yuml.me/diagram/classic/class/[Profesor]0..*-0..*[Asignatura|direccionProfesor: address;nombreAsignatura: String;cursoAcademico: String; evaluaciones: evaluacion Array; direccionesMatriuclados array public |constructorAsignatura(nombreAsignatura: String, cursoAcademico: String); getNombreAsignatura(); getCursoAcademico(); getDireccionProfesor(); crearEvaluacion(nombreEvaluacion: String, fechaEvaluacion: uint, puntosNotaFinal: uint): evaluacionesArray.add(evaluacion); getEvaluaciones(i: uint); evaluacionesLength(): Int; automatricularseAlumno(nombre: String, email: String); quienSoy(): (nombre: String, email: String); califica(direccionAlumno: address, indiceEvaluacion: uint, notaEnTipo: tipoDeNota, calificacionx100: uint); miNota(evaluacion: evaluacion): (notaTipo: tipoDeNota); calificaciones(direccionAlumno: adresss, indiceEvaluacion: uint)| soloProfesor; soloMatriuclados; noMatriculados ]0..*-0..*[Alumno]" >
 
 ## Enunciado
 Crear un contrato inteligente llamado Asignatura para representar una asignatura de la carrera.
@@ -63,10 +71,6 @@ Crear un modificador, llamado soloMatriculados, para que las funciones quienSoy 
 
 Crear un modificador, llamado noMatriculados, para que la función automatricula solo pueda ejecutarla un alumno que no se ha matriculado aun.
 
-## Diagrama de clases
 
-<img src="http://yuml.me/diagram/scruffy/class/[User|#counter;+Forename;+Surname;+HashedPassword;-Salt|+Login(user,pass);+Logout();+Register()]">
-
-<img src="http://yuml.me/diagram/classic/class/[Profesor]0..*-0..*[Asignatura|direccionProfesor: address;nombreAsignatura: String;cursoAcademico: String; evaluaciones: evluacion Array |constructorAsignatura(nombreAsignatura: String, cursoAcademico: String); getNombreAsignatura(); getCursoAcademico(); getDireccionProfesor(); crearEvaluacion(nombreEvaluacion: String, fechaEvaluacion: uint, puntosNotaFinal: uint): evaluacionesArray.add(evaluacion); getEvaluaciones(i: uint); evaluacionesLength(): Int]0..*-0..*[Alumno]" >
 
 
