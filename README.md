@@ -24,7 +24,6 @@ Solo tiene que entregar la práctica uno de los miembros del grupo.
 
 ## Diagrama de clases
 
-<img src="http://yuml.me/diagram/scruffy/class/[User|#counter;+Forename;+Surname;+HashedPassword;-Salt|+Login(user,pass);+Logout();+Register()]">
 
 <img src="http://yuml.me/diagram/classic/class/[Profesor]0..*-0..*[Asignatura|direccionProfesor: address;nombreAsignatura: String;cursoAcademico: String; evaluaciones: evaluacion Array; direccionesMatriuclados array public |constructorAsignatura(nombreAsignatura: String, cursoAcademico: String); getNombreAsignatura(); getCursoAcademico(); getDireccionProfesor(); crearEvaluacion(nombreEvaluacion: String, fechaEvaluacion: uint, puntosNotaFinal: uint): evaluacionesArray.add(evaluacion); getEvaluaciones(i: uint); evaluacionesLength(): Int; automatricularseAlumno(nombre: String, email: String); quienSoy(): (nombre: String, email: String); califica(direccionAlumno: address, indiceEvaluacion: uint, notaEnTipo: tipoDeNota, calificacionx100: uint); miNota(evaluacion: evaluacion): (notaTipo: tipoDeNota); calificaciones(direccionAlumno: adresss, indiceEvaluacion: uint)| soloProfesor; soloMatriuclados; noMatriculados ]0..*-0..*[Alumno]" >
 
