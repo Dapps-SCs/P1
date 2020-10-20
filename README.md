@@ -67,6 +67,6 @@ Crear un modificador, llamado noMatriculados, para que la función automatricula
 
 <img src="http://yuml.me/diagram/scruffy/class/[User|#counter;+Forename;+Surname;+HashedPassword;-Salt|+Login(user,pass);+Logout();+Register()]">
 
-<img src="http://yuml.me/diagram/classic/class/[Profesor]0..*-0..*[Asignatura|direccionProfesor: address;nombreAsignatura: String;cursoAcademico: String; evaluaciones: evluacion Array |constructorAsignatura(nombreAsignatura: String, cursoAcademico: String); getNombreAsignatura(); getCursoAcademico(); getDireccionProfesor(); crearEvaluacion(nombreEvaluacion: String, fechaEvaluacion: uint, puntosNotaFinal: uint): evaluacionesArray.add(evaluacion); getEvaluaciones(i: uint)]0..*-0..*[Alumno]" >
+<img src="http://yuml.me/diagram/classic/class/[Profesor]0..*-0..*[Asignatura|direccionProfesor: address;nombreAsignatura: String;cursoAcademico: String; evaluaciones: evluacion Array |constructorAsignatura(nombreAsignatura: String, cursoAcademico: String); getNombreAsignatura(); getCursoAcademico(); getDireccionProfesor(); crearEvaluacion(nombreEvaluacion: String, fechaEvaluacion: uint, puntosNotaFinal: uint): evaluacionesArray.add(evaluacion); getEvaluaciones(i: uint); evaluacionesLength(): Int]0..*-0..*[Alumno]" >
 
 
