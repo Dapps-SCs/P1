@@ -2,15 +2,31 @@
 
 Práctica 1 - Contrato Asignatura
 
-## Entrega
+## Introducción
 
 ## Diagrama de clases
+
+## Entrega
 
 ## Enunciado
 
 
 
 ------------
+
+## Introducción
+
+En esta práctica se implementa Asignatura.sol 
+
+1. Se diseña según los requisitos del enunciado
+2. Se configura el entorno de desarrollo: primero, se trata de implementar el contrato en remix ide, pero se descubre que este no permite relaizar tests: se instala ganache + truffle.
+3. Se implementa el contrato apoyándonos en tests.
+
+## Diagrama de clases
+
+
+<img src="http://yuml.me/diagram/classic/class/[Profesor]0..*-0..*[Asignatura|direccionProfesor: address;nombreAsignatura: String;cursoAcademico: String; evaluaciones: evaluacion Array; direccionesMatriuclados array public |constructorAsignatura(nombreAsignatura: String, cursoAcademico: String); getNombreAsignatura(); getCursoAcademico(); getDireccionProfesor(); crearEvaluacion(nombreEvaluacion: String, fechaEvaluacion: uint, puntosNotaFinal: uint): evaluacionesArray.add(evaluacion); getEvaluaciones(i: uint); evaluacionesLength(): Int; automatricularseAlumno(nombre: String, email: String); quienSoy(): (nombre: String, email: String); califica(direccionAlumno: address, indiceEvaluacion: uint, notaEnTipo: tipoDeNota, calificacionx100: uint); miNota(evaluacion: evaluacion): (notaTipo: tipoDeNota); calificaciones(direccionAlumno: adresss, indiceEvaluacion: uint)| soloProfesor; soloMatriuclados; noMatriculados ]0..*-0..*[Alumno]" >
+
 
 ## Entrega
 
@@ -22,10 +38,6 @@ Poner un comentario en el fichero con los nombres de los alumnos del grupo.
 
 Solo tiene que entregar la práctica uno de los miembros del grupo.
 
-## Diagrama de clases
-
-
-<img src="http://yuml.me/diagram/classic/class/[Profesor]0..*-0..*[Asignatura|direccionProfesor: address;nombreAsignatura: String;cursoAcademico: String; evaluaciones: evaluacion Array; direccionesMatriuclados array public |constructorAsignatura(nombreAsignatura: String, cursoAcademico: String); getNombreAsignatura(); getCursoAcademico(); getDireccionProfesor(); crearEvaluacion(nombreEvaluacion: String, fechaEvaluacion: uint, puntosNotaFinal: uint): evaluacionesArray.add(evaluacion); getEvaluaciones(i: uint); evaluacionesLength(): Int; automatricularseAlumno(nombre: String, email: String); quienSoy(): (nombre: String, email: String); califica(direccionAlumno: address, indiceEvaluacion: uint, notaEnTipo: tipoDeNota, calificacionx100: uint); miNota(evaluacion: evaluacion): (notaTipo: tipoDeNota); calificaciones(direccionAlumno: adresss, indiceEvaluacion: uint)| soloProfesor; soloMatriuclados; noMatriculados ]0..*-0..*[Alumno]" >
 
 ## Enunciado
 Crear un contrato inteligente llamado Asignatura para representar una asignatura de la carrera.
