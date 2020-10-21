@@ -20,7 +20,7 @@ En esta práctica se implementa Asignatura.sol
 
 1. Se diseña según los requisitos del enunciado
 2. Se configura el entorno de desarrollo: primero, se trata de implementar el contrato en remix ide, pero se descubre que este no permite relaizar tests: se instala ganache + truffle.
-3. Se implementa el contrato apoyándonos en tests.
+3. Se implementa el contrato.
 
 ## Diagrama de clases
 
