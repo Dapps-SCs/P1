@@ -29,9 +29,18 @@ contract Asignatura{
     struct Evaluacion{
         string nombreEvaluacion;
         uint fechaEvaluacion;
+        uint puntos;
     }
 
     Evaluacion[] evaluaciones;
+
+    function creaEvaluacion(string memory _nombreEvaluacion, uint memory _fechaEvaluacion, uint memory _puntos) soloProfesor(msg.sender){
+        Evaluacion e;
+        e.nombreEvaluacion = _nombreEvaluacion;
+        e.fechaEvaluacion = _fechaEvaluacion;
+        e.puntos = _puntos;
+        evaluaciones.push(e);
+    }
 
     // Cree el método evaluacionesLength que devuelve el número de evaluaciones creadas.
     function evaluacionesLength() view public returns (uint) {
@@ -44,10 +53,11 @@ contract Asignatura{
     struct Alumno{
         string nombreAlumno;
         string emailAlumno;
+        mapping (uint => Nota) notas;
     }
 
     address[] public matriculas;
-    Alumno[] alumnosMatriculados;
+    mapping(address => Alumno) alumnosMatriculados;
 
     function automatricula(string memory _nombreAlumno, string memory _emailAlumno){
     bytes memory enBytes = _nombreAlumno;
@@ -72,12 +82,61 @@ contract Asignatura{
     }
 
     // Crear un método que devuelva los datos del alumno (nombre y email) dada su dirección.
-    function quienEs(address _direccion) view public returns (string memory, string memory){
+    function quienEs(address memory _direccion) view public returns (string memory, string memory){
      // Comprueba si está el alumno matriculado.
     bytes memory matriculado = bytes(alumnosMatriculados[_direccion]);
     require(matriculado.length!=0);
 
     return (alumnosMatriculados[msg.sender].nombreAlumno, alumnosMatriculados[msg.sender].emailAlumno);
     }
+
+    //Crear el método califica para poner una nota a un alumno en una asignatura. Tiene 4 parámetros:
+    // la dirección del alumno.
+    // el índice de una evaluación (en el array de evaluaciones).
+    // tipo de nota: 0 es NP, 1 es una nota normal, y 2 es MH. Crear un enumerado para el tipo.
+    // un uint con la calificación (multipilicada por 100 porque no hay decimales)
+
+    enum tipoNota {NP, normal, MH}
+
+    struct Nota{
+        tipoNota tN;
+        uint calificacion;
+    }
+
+    // Cada alumno tiene un array con notas
+
+    function califica(address memory _direccionAlumno, uint memory _iEval, tipoNota memory _nota, uint memory _calificacion) soloProfesor(msg.sender){
+        Nota memory n;
+        n.tN = _nota;
+        n.calificacion = _calificacion*100;
+        alumnosMatriculados[_direccionAlumno].notas[_iEval] = n;
+    }
+
+    function miNota(uint memory _iEval) view public returns(tipoNota, uint){
+        // Si está matriculado, halla la evalaución en evaluaciones y con el address del que invoca
+        // devuelve la nota
+        return (alumnosMatriculados[msg.sender].notas[_iEval].tN, alumnosMatriculados[msg.sender].notas[_iEval].calificacion);
+    }
+
+    // Crear el método calificaciones que devuelve la nota de una alumno en una evaluación.
+    // Toma como parámetros la dirección del alumno y el índice de la evaluación.
+    function calificaciones(address memory _direccionAlumno, uint memory _iEval) view public returns (uint){
+       return (alumnosMatriculados[msg.sender].notas[_iEval].calificacion);
+    }
+
+    // Crear un modificador, llamado soloProfesor, para que las funciones creaEvaluacion y califica solo pueda ejecutarlas el profesor.
+    modifier soloProfesor (address sender){
+        require(sender == direccionProfesor);
+        _;
+    }
+
+    // Crear un modificador, llamado soloMatriculados, para que las funciones quienSoy y miNota solo pueda ejecutarlas un alumno matriculado.
+    modifier soloProfesor (address sender){
+        require(sender == direccionProfesor);
+        _;
+    }
+
+    // Crear un modificador, llamado noMatriculados, para que la función automatricula solo
+    //pueda ejecutarla un alumno que no se ha matriculado aun.
 
 }
