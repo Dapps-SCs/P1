@@ -46,7 +46,7 @@ contract Asignatura{
         string emailAlumno;
     }
 
-    address[] matriculas;
+    address[] public matriculas;
     Alumno[] alumnosMatriculados;
 
     function automatricula(string memory _nombreAlumno, string memory _emailAlumno){
@@ -59,6 +59,25 @@ contract Asignatura{
     a.nombreAlumno = _nombreAlumno;
     a.emailAlumno = _emailAlumno;
     alumnosMatriculados.push(a);
+    }
+
+    // El método matriculasLength devuelve el número de alumnos matriculados.
+    function matriculasLength() view public returns (uint) {
+        return matriculas.length;
+    }
+
+    // Crear el método quienSoy que devuelve el nombre y el email del alumno que invoca el método.
+    function quienSoy() view public returns (string memory, string memory){
+        return (alumnosMatriculados[msg.sender].nombreAlumno, alumnosMatriculados[msg.sender].emailAlumno);
+    }
+
+    // Crear un método que devuelva los datos del alumno (nombre y email) dada su dirección.
+    function quienEs(address _direccion) view public returns (string memory, string memory){
+     // Comprueba si está el alumno matriculado.
+    bytes memory matriculado = bytes(alumnosMatriculados[_direccion]);
+    require(matriculado.length!=0);
+
+    return (alumnosMatriculados[msg.sender].nombreAlumno, alumnosMatriculados[msg.sender].emailAlumno);
     }
 
 }
