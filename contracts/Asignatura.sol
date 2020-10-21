@@ -59,7 +59,7 @@ contract Asignatura{
     address[] public matriculas;
     mapping(address => Alumno) alumnosMatriculados;
 
-    function automatricula(string memory _nombreAlumno, string memory _emailAlumno){
+    function automatricula(string memory _nombreAlumno, string memory _emailAlumno) noMatriculados(msg.sender){
     bytes memory enBytes = _nombreAlumno;
     require(enBytes.length!=0);
 
@@ -77,7 +77,7 @@ contract Asignatura{
     }
 
     // Crear el método quienSoy que devuelve el nombre y el email del alumno que invoca el método.
-    function quienSoy() view public returns (string memory, string memory){
+    function quienSoy() soloMatriculados(msg.sender) view public returns (string memory, string memory){
         return (alumnosMatriculados[msg.sender].nombreAlumno, alumnosMatriculados[msg.sender].emailAlumno);
     }
 
@@ -112,7 +112,7 @@ contract Asignatura{
         alumnosMatriculados[_direccionAlumno].notas[_iEval] = n;
     }
 
-    function miNota(uint memory _iEval) view public returns(tipoNota, uint){
+    function miNota(uint memory _iEval) soloMatriculados(msg.sender) view public returns(tipoNota, uint) {
         // Si está matriculado, halla la evalaución en evaluaciones y con el address del que invoca
         // devuelve la nota
         return (alumnosMatriculados[msg.sender].notas[_iEval].tN, alumnosMatriculados[msg.sender].notas[_iEval].calificacion);
@@ -131,12 +131,17 @@ contract Asignatura{
     }
 
     // Crear un modificador, llamado soloMatriculados, para que las funciones quienSoy y miNota solo pueda ejecutarlas un alumno matriculado.
-    modifier soloProfesor (address sender){
-        require(sender == direccionProfesor);
+    modifier soloMatriculados (address sender){
+        bytes memory matriculado = bytes(alumnosMatriculados[_direccion]);
+        require(matriculado.length!=0);
         _;
     }
 
     // Crear un modificador, llamado noMatriculados, para que la función automatricula solo
     //pueda ejecutarla un alumno que no se ha matriculado aun.
-
+    modifier noMatriculados (address sender){
+        bytes memory matriculado = bytes(alumnosMatriculados[_direccion]);
+        require(matriculado.length==0);
+        _;
+    }
 }
