@@ -26,7 +26,7 @@ contract Asignatura{
     // Por ejemplo, el primer parcial, o la práctica 3. Tomará como parámetros el nombre de la evaluación (string),
     //la fecha de evaluación (uint) y los puntos que proporcionará a la nota final.
     //Las evaluaciones se meterán en un array, y nos referiremos a ellas por su posición en el array.
-    struct evaluacion{
+    struct Evaluacion{
         string nombreEvaluacion;
         uint fechaEvaluacion;
     }
@@ -38,5 +38,27 @@ contract Asignatura{
         return evaluaciones.length;
     }
 
+    //Los alumnos pueden automatricularse con el metodo automatricula, que toma como parámetros el nombre y el email del alumno.
+    //Ambos son strings. Impedir que se pueda meter un nombre vacio.
+
+    struct Alumno{
+        string nombreAlumno;
+        string emailAlumno;
+    }
+
+    address[] matriculas;
+    Alumno[] alumnosMatriculados;
+
+    function automatricula(string memory _nombreAlumno, string memory _emailAlumno){
+    bytes memory enBytes = _nombreAlumno;
+    require(enBytes.length!=0);
+
+    matriculas.push(msg.sender); // Guarda la dirección del que lo llama.
+
+    Alumno memory a;
+    a.nombreAlumno = _nombreAlumno;
+    a.emailAlumno = _emailAlumno;
+    alumnosMatriculados.push(a);
+    }
 
 }
