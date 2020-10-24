@@ -17,9 +17,9 @@ contract Asignatura{
     address public direccionProfesor;
 // El constructor tomará como parámetros el nombre de la asignatura, y el curso académico. Ambos son strings.
     constructor(string memory _nombreAsignatura, string memory _cursoAcademico) public{
-        nombre = _nombre;
-        curso = _curso;
-        professor = msg.sender;
+        nombreAsignatura = _nombreAsignatura;
+        cursoAcademico = _cursoAcademico;
+        direccionProfesor = msg.sender;
     }
 
     // Crear el método creaEvaluacion para crear una prueba de evaluacion de la asignatura.
@@ -34,8 +34,8 @@ contract Asignatura{
 
     Evaluacion[] evaluaciones;
 
-    function creaEvaluacion(string memory _nombreEvaluacion, uint memory _fechaEvaluacion, uint memory _puntos) soloProfesor(msg.sender){
-        Evaluacion e;
+    function creaEvaluacion(string memory _nombreEvaluacion, uint _fechaEvaluacion, uint _puntos) public soloProfesor(msg.sender){
+        Evaluacion memory e;
         e.nombreEvaluacion = _nombreEvaluacion;
         e.fechaEvaluacion = _fechaEvaluacion;
         e.puntos = _puntos;
@@ -59,8 +59,8 @@ contract Asignatura{
     address[] public matriculas;
     mapping(address => Alumno) alumnosMatriculados;
 
-    function automatricula(string memory _nombreAlumno, string memory _emailAlumno) noMatriculados(msg.sender){
-    bytes memory enBytes = _nombreAlumno;
+    function automatricula(string memory _nombreAlumno, string memory _emailAlumno) public noMatriculados(msg.sender){
+    bytes memory enBytes = bytes(_nombreAlumno);
     require(enBytes.length!=0);
 
     matriculas.push(msg.sender); // Guarda la dirección del que lo llama.
@@ -68,7 +68,7 @@ contract Asignatura{
     Alumno memory a;
     a.nombreAlumno = _nombreAlumno;
     a.emailAlumno = _emailAlumno;
-    alumnosMatriculados.push(a);
+    alumnosMatriculados[msg.sender]=a;
     }
 
     // El método matriculasLength devuelve el número de alumnos matriculados.
@@ -82,9 +82,9 @@ contract Asignatura{
     }
 
     // Crear un método que devuelva los datos del alumno (nombre y email) dada su dirección.
-    function quienEs(address memory _direccion) view public returns (string memory, string memory){
+    function quienEs(address _direccion) view public returns (string memory, string memory){
      // Comprueba si está el alumno matriculado.
-    bytes memory matriculado = bytes(alumnosMatriculados[_direccion]);
+    bytes memory matriculado = bytes(alumnosMatriculados[_direccion].nombreAlumno);
     require(matriculado.length!=0);
 
     return (alumnosMatriculados[msg.sender].nombreAlumno, alumnosMatriculados[msg.sender].emailAlumno);
@@ -105,14 +105,14 @@ contract Asignatura{
 
     // Cada alumno tiene un array con notas
 
-    function califica(address memory _direccionAlumno, uint memory _iEval, tipoNota memory _nota, uint memory _calificacion) soloProfesor(msg.sender){
+    function califica(address _direccionAlumno, uint _iEval, tipoNota _nota, uint _calificacion) public soloProfesor(msg.sender){
         Nota memory n;
         n.tN = _nota;
         n.calificacion = _calificacion*100;
         alumnosMatriculados[_direccionAlumno].notas[_iEval] = n;
     }
 
-    function miNota(uint memory _iEval) soloMatriculados(msg.sender) view public returns(tipoNota, uint) {
+    function miNota(uint _iEval) soloMatriculados(msg.sender) view public returns(tipoNota, uint) {
         // Si está matriculado, halla la evalaución en evaluaciones y con el address del que invoca
         // devuelve la nota
         return (alumnosMatriculados[msg.sender].notas[_iEval].tN, alumnosMatriculados[msg.sender].notas[_iEval].calificacion);
@@ -120,7 +120,7 @@ contract Asignatura{
 
     // Crear el método calificaciones que devuelve la nota de una alumno en una evaluación.
     // Toma como parámetros la dirección del alumno y el índice de la evaluación.
-    function calificaciones(address memory _direccionAlumno, uint memory _iEval) view public returns (uint){
+    function calificaciones(address _direccionAlumno, uint _iEval) view public returns (uint){
        return (alumnosMatriculados[msg.sender].notas[_iEval].calificacion);
     }
 
@@ -132,7 +132,7 @@ contract Asignatura{
 
     // Crear un modificador, llamado soloMatriculados, para que las funciones quienSoy y miNota solo pueda ejecutarlas un alumno matriculado.
     modifier soloMatriculados (address sender){
-        bytes memory matriculado = bytes(alumnosMatriculados[_direccion]);
+        bytes memory matriculado = bytes(alumnosMatriculados[sender].nombreAlumno);
         require(matriculado.length!=0);
         _;
     }
@@ -140,7 +140,7 @@ contract Asignatura{
     // Crear un modificador, llamado noMatriculados, para que la función automatricula solo
     //pueda ejecutarla un alumno que no se ha matriculado aun.
     modifier noMatriculados (address sender){
-        bytes memory matriculado = bytes(alumnosMatriculados[_direccion]);
+        bytes memory matriculado = bytes(alumnosMatriculados[sender].nombreAlumno);
         require(matriculado.length==0);
         _;
     }
