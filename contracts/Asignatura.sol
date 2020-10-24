@@ -60,15 +60,15 @@ contract Asignatura{
     mapping(address => Alumno) alumnosMatriculados;
 
     function automatricula(string memory _nombreAlumno, string memory _emailAlumno) public noMatriculados(msg.sender){
-    bytes memory enBytes = bytes(_nombreAlumno);
-    require(enBytes.length!=0);
+        bytes memory enBytes = bytes(_nombreAlumno);
+        require(enBytes.length!=0);
 
-    matriculas.push(msg.sender); // Guarda la dirección del que lo llama.
+        matriculas.push(msg.sender); // Guarda la dirección del que lo llama.
 
-    Alumno memory a;
-    a.nombreAlumno = _nombreAlumno;
-    a.emailAlumno = _emailAlumno;
-    alumnosMatriculados[msg.sender]=a;
+        Alumno memory a;
+        a.nombreAlumno = _nombreAlumno;
+        a.emailAlumno = _emailAlumno;
+        alumnosMatriculados[msg.sender]=a;
     }
 
     // El método matriculasLength devuelve el número de alumnos matriculados.
@@ -84,10 +84,10 @@ contract Asignatura{
     // Crear un método que devuelva los datos del alumno (nombre y email) dada su dirección.
     function quienEs(address _direccion) view public returns (string memory, string memory){
      // Comprueba si está el alumno matriculado.
-    bytes memory matriculado = bytes(alumnosMatriculados[_direccion].nombreAlumno);
-    require(matriculado.length!=0);
+        bytes memory matriculado = bytes(alumnosMatriculados[_direccion].nombreAlumno);
+        require(matriculado.length!=0);
 
-    return (alumnosMatriculados[_direccion].nombreAlumno, alumnosMatriculados[_direccion].emailAlumno);
+        return (alumnosMatriculados[_direccion].nombreAlumno, alumnosMatriculados[_direccion].emailAlumno);
     }
 
     //Crear el método califica para poner una nota a un alumno en una asignatura. Tiene 4 parámetros:
@@ -121,7 +121,7 @@ contract Asignatura{
     // Crear el método calificaciones que devuelve la nota de una alumno en una evaluación.
     // Toma como parámetros la dirección del alumno y el índice de la evaluación.
     function calificaciones(address _direccionAlumno, uint _iEval) view public returns (uint){
-       return (alumnosMatriculados[_direccionAlumno].notas[_iEval].calificacion);
+        return (alumnosMatriculados[_direccionAlumno].notas[_iEval].calificacion);
     }
 
     // Crear un modificador, llamado soloProfesor, para que las funciones creaEvaluacion y califica solo pueda ejecutarlas el profesor.
