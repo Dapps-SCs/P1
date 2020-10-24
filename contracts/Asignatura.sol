@@ -87,7 +87,7 @@ contract Asignatura{
     bytes memory matriculado = bytes(alumnosMatriculados[_direccion].nombreAlumno);
     require(matriculado.length!=0);
 
-    return (alumnosMatriculados[msg.sender].nombreAlumno, alumnosMatriculados[msg.sender].emailAlumno);
+    return (alumnosMatriculados[_direccion].nombreAlumno, alumnosMatriculados[_direccion].emailAlumno);
     }
 
     //Crear el método califica para poner una nota a un alumno en una asignatura. Tiene 4 parámetros:
@@ -121,12 +121,12 @@ contract Asignatura{
     // Crear el método calificaciones que devuelve la nota de una alumno en una evaluación.
     // Toma como parámetros la dirección del alumno y el índice de la evaluación.
     function calificaciones(address _direccionAlumno, uint _iEval) view public returns (uint){
-       return (alumnosMatriculados[msg.sender].notas[_iEval].calificacion);
+       return (alumnosMatriculados[_direccionAlumno].notas[_iEval].calificacion);
     }
 
     // Crear un modificador, llamado soloProfesor, para que las funciones creaEvaluacion y califica solo pueda ejecutarlas el profesor.
     modifier soloProfesor (address sender){
-        require(sender == direccionProfesor);
+        require(direccionProfesor == sender);
         _;
     }
 
