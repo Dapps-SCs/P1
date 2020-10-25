@@ -66,6 +66,11 @@ contract Asignatura{
     address[] public matriculas;
     mapping(address => Alumno) alumnosMatriculados;
 
+    event MatriculaCreada(
+        string nombreAlumno,
+        string emailAlumno
+    );
+
     function automatricula(string memory _nombreAlumno, string memory _emailAlumno) public noMatriculados(msg.sender){
         bytes memory enBytes = bytes(_nombreAlumno);
         require(enBytes.length!=0);
@@ -76,6 +81,8 @@ contract Asignatura{
         a.nombreAlumno = _nombreAlumno;
         a.emailAlumno = _emailAlumno;
         alumnosMatriculados[msg.sender]=a;
+
+        emit MatriculaCreada(_nombreAlumno, _emailAlumno);
     }
 
     // El método matriculasLength devuelve el número de alumnos matriculados.
