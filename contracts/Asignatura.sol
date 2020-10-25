@@ -32,6 +32,12 @@ contract Asignatura{
         uint puntos;
     }
 
+    event EvaluacionCreada(
+        string nombreEvaluacion,
+        uint fechaEvaluacion,
+        uint puntos
+    );
+
     Evaluacion[] evaluaciones;
 
     function creaEvaluacion(string memory _nombreEvaluacion, uint _fechaEvaluacion, uint _puntos) public soloProfesor(msg.sender){
@@ -40,6 +46,7 @@ contract Asignatura{
         e.fechaEvaluacion = _fechaEvaluacion;
         e.puntos = _puntos;
         evaluaciones.push(e);
+        emit EvaluacionCreada(_nombreEvaluacion, _fechaEvaluacion, _puntos);
     }
 
     // Cree el método evaluacionesLength que devuelve el número de evaluaciones creadas.
